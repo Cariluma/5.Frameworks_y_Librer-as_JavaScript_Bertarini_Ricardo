@@ -4,7 +4,7 @@ rojo($(".main-titulo"));
 function rojo(){
 $(".main-titulo").animate(
   {color: "#f0230e"},
-   500,function(){
+   2000,function(){
      amarillo()
    }
 )
@@ -13,8 +13,19 @@ $(".main-titulo").animate(
 function amarillo(){
 $(".main-titulo").animate(
   {color: "#DCFF0E"},
- 500,function(){
+ 2000,function(){
    rojo()
  }
 )
 }
+
+ $(document).ready(function(){
+   for (var i = 1; i < 50 ; i++){
+     var id = "#";
+     var pos = i;
+     var numero = Math.floor((Math.random() * 4) + 1);
+     var ruta = "image/"+numero+".png";
+     //window.alert(ruta+pos)
+     $(id+i).attr("src", ruta);
+  }
+});
