@@ -1,28 +1,79 @@
-//Inicia funcion rojo, la cual llamara al terminar la funcion amarillo
-rojo($(".main-titulo"));
-//Animate para cambiar a color rojo
-function rojo() {
-  $(".main-titulo").animate({
-      color: "#f0230e"
-    },
-    2000,
-    function() {
-      amarillo()
+totalColumnas = 7
+totalFilas = 5
+//Carga de la pagina inicia el codigo llamado juegodulces.
+$(document).ready(function() {
+  juegoDulces.init();
+  juegoDulces.cargarImagenes();
+});
+
+//Toda la ejecucuin del codigo se realiza con la variable juegoDulces
+//que inicializa todas las funciones acorde se las llame.
+var juegoDulces = {
+  init: function() {
+    this.animacionTitulo();
+  },
+  animacionTitulo: function() {
+    //Inicia funcion rojo, la cual llamara al terminar la funcion amarillo
+    rojo($(".main-titulo"));
+    //Animate para cambiar a color rojo
+    function rojo() {
+      $(".main-titulo").animate({
+          color: "#f0230e"
+        },
+        2000,
+        function() {
+          amarillo()
+        }
+      )
     }
-  )
-}
-//Animate para cambiar a color amarillo
-function amarillo() {
-  $(".main-titulo").animate({
-      color: "#DCFF0E"
-    },
-    2000,
-    function() {
-      rojo()
+    //Animate para cambiar a color amarillo
+    function amarillo() {
+      $(".main-titulo").animate({
+          color: "#DCFF0E"
+        },
+        2000,
+        function() {
+          rojo()
+        }
+      )
     }
-  )
+  },
+  cargarImagenes: function() {
+    var num = 1;
+    var numImg = 1;
+    for (var i = 1; i <= totalColumnas; i++) {
+      for (var ii = 1; ii <= totalFilas; ii++) {
+        var imagen = new this.imagenes;
+        var src = imagen[Math.floor(Math.random() * imagen.total)];
+        $(".col-" + num).append("<div id='item-" + numImg + " img-" + ii + "'>" +
+          "<img src=" + src + " class='imagen-" + numImg + "'>" +
+          "</div>");
+        console.log(imagen);
+      }
+      num++;
+    }
+
+  },
+
+  imagenes: function() {
+    var i = 0;
+    this[i++] = "image/1.png";
+    this[i++] = "image/2.png";
+    this[i++] = "image/3.png";
+    this[i++] = "image/4.png";
+    this.total = i;
+  },
+
 }
-///////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+/*
 //Asigna aleatoriamente una imagen en todos las etiquetas img en el DOM.
 $(document).ready(function() {
   for (var i = 1; i < 50; i++) {
@@ -35,7 +86,7 @@ $(document).ready(function() {
     //console.log(ruta);
   }
 });
-/////////////////////////////////////////////////////////////////////////////
+
 //Matriz donde se asignaran los valores de cada src para comparar
 var fila1 = ["", "", "", "", "", "", "", ];
 var fila2 = ["", "", "", "", "", "", "", ];
@@ -47,7 +98,6 @@ var fila7 = ["", "", "", "", "", "", "", ];
 var matriz = [fila1, fila2, fila3, fila4, fila5, fila6, fila7];
 //Con el siguiente codigo se accede al valor asignado en la matriz
 //console.log(matriz[0][0]);
-///////////////////////////////////////////////////////////////////////////////////
 //Recorremos todas las etiquetas img y vemos que imagen tiene asignada cada una.
 //Tambien asigna a la matriz los valores de cada imagen para poder comparar
 $(document).ready(function() {
@@ -86,18 +136,12 @@ $(document).ready(function() {
         g++;
       }
     }
-    //console.log(fila1);
-    //console.log(fila2);
-    //  console.log(fila3);
-    //console.log(fila4);
-    //  console.log(fila5);
-    //  console.log(fila6);
-    //  console.log(fila7);
-  
+
     borrar();
     retraso();
     reempl();
-    /////////////////////////////////////////////////////////////////////////////
+
+
     //Contador de https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer
     //Modificado para dos minutos.
     function startTimer(duration, display) {
@@ -154,9 +198,9 @@ $(document).ready(function() {
         reemplazo()
       }, 5000); // 3000ms = 3s
     }
+
   });
 });
-////////////////////////////////////////////
 
 function borrar() {
   if (fila1[0] == fila1[1] && fila1[1] == fila1[2]) {
@@ -381,21 +425,11 @@ function visible() {
     } else {
       var posMenos1 = pos - 1;
       //  console.log('Elemento oculto');
-      $(id + pos).removeAttr("src");
-
+      $(id + pos).empty("src");
     }
   }
 };
 
-/*function reemplazo(){
-  if($("#1").length == 0) {
-console.log("No existe");
-}else{
-  console.log("existe");
-}
-  };*/
-
-// Con esto me doy cuenta si hay imagenes con la imagen visible.
 function reemplazo() {
 
   var id = "#";
@@ -424,65 +458,17 @@ function reemplazo() {
 
 };
 
+//Invoco la funcion dragable para poder mover los elementos.
+//y el revert true lo vuelve a su lugar de origen si no tiene el droppable.
+$( document ).ready(function() {
+      id = "#";
+      	$('.elemento').draggable({revert: true });
+      });
 
+      $("#1").droppable({
+         accept:"#2",
+         drop: function ( event, ui ) {
+         	     $("#1").replaceWith($("#2"));
 
-
-
-
-
-
-
-/*Puedes utilizar un setInterval
-
-con un lapso de i segundo (1000)
- y que actualice el contador sumando uno
-
-o restando 1
-
-y haces una pequeña validación allí para que funciona
-como un contador (dado que los segundos y minutos llegan sólo a 60)
-
-*/
-
-
-
-/*
-Con JavaScript lo puedes hacer con ésta estructura:
-
-// Comprobar usando el ID del elemento
-if(document.getElementById("elemento")){/* Que hacer si existe } else { Que hacer si no existe }
-
-// Comprobar usando el Class del elemento o cualquier otro atributo
-if(document.querySelector(".elemento")){ Que hacer si existe } else { Que hacer si no existe }
-
-Con JQuery lo puedes hacer así:
-
-if($('#elemento').length) { Que hacer si existe  } else {* Que hacer si no existe }
-*/
-
-
-// tengo que crear una matriz para asignar los valores y poder comparar
-
-//Quita el link de la imagen
-//$("#7").removeAttr("src");
-
-
-/*setInterval(function temporizador() {
-      if (contador <=  59) {
-        $("#timer").text(minutos + ":" + segundos);
-        segundos = segundos - 1;
-        contador = contador + 1;
-        console.log(contador);
-      }
-      else if (contador = 60 ) {
-        segundos = segundos + 59;
-        contador = contador + 1;
-      } else if (contador == 120) {
-        minutos = 00;
-        segundos = 00;
-        //  $("#timer").text(minutos + ":" + segundos);
-          //$("<h1 class='data-titulo'>Juego terminado</h1>").insertBefore($(".panel-score"));
-      }
-
-    }, 1000);
-*/
+         }
+    });*/
